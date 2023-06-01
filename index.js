@@ -14,4 +14,10 @@ app.post("/games", gamesController.createGame);
 app.get("/games/:gameId", gamesController.getGame);
 app.post("/games/:gameId/guesses", gamesController.createGuess);
 
+app.all("/*", (req, res) => {
+    res.status(404).json({
+        Message: "Page Not Found."
+    })
+})
+
 app.listen(4567);
