@@ -16,7 +16,7 @@ const clearUnmaskedWord = (game) => {
 
 
 function createGame(req, res) {
-  const newGameWord = retrieveWord();
+  const newGameWord = retrieveWord().toLowerCase();
   const newGameId = uuid();
   const newGame = {
     remainingGuesses: 6,
@@ -29,7 +29,7 @@ function createGame(req, res) {
 
   games[newGameId] = newGame;
 
-  res.status(201).send(newGameId);
+  res.status(201).json(newGameId);
 }
 
 function getGame(req, res) { 
@@ -48,7 +48,8 @@ function getGame(req, res) {
 
 function createGuess(req, res) { 
     const { gameId } = req.params;
-    const { letter } = req.body;
+    let { letter } = req.body;
+    letter = letter.toLowerCase();
 
     var game = games[gameId];
     if (!game) return res.status(404).json({
