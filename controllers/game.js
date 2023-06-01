@@ -43,13 +43,13 @@ function getGame(req, res) {
         }); 
     }
 
-    res.status(200).json(clearUnmaskedWord(game));
+    return res.status(200).json(clearUnmaskedWord(game));
 }
 
 function createGuess(req, res) { 
     const { gameId } = req.params;
     let { letter } = req.body;
-    letter = letter.toLowerCase();
+
 
     var game = games[gameId];
     if (!game) return res.status(404).json({
@@ -61,6 +61,8 @@ function createGuess(req, res) {
             Message: "Guess must be supplied with 1 letter"
         })
     }
+
+    letter = letter.toLowerCase();
 
     // todo: add logic for making a guess, modifying the game and updating the status
 
@@ -110,7 +112,7 @@ function deleteGame(req, res) {
 
     if (!game) return res.status(404).json({Message: "Game Not Found."});
     delete games[gameId];
-    res.sendStatus(204)
+    return res.sendStatus(204)
 }
 
 module.exports = {
