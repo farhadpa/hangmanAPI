@@ -104,8 +104,18 @@ function createGuess(req, res) {
     return res.status(201).json(clearUnmaskedWord(game));
 }
 
+function deleteGame(req, res) {
+    const { gameId } = req.params;
+    const game = games[gameId];
+
+    if (!game) return res.status(404).json({Message: "Game Not Found."});
+    delete games[gameId];
+    res.sendStatus(204)
+}
+
 module.exports = {
     createGame,
     getGame,
     createGuess,
+    deleteGame,
   };
